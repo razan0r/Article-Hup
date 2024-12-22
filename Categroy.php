@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	
 	<!-- Navigation Bar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
