@@ -1,3 +1,9 @@
+<?php 
+session_start();
+
+if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
+ ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +15,12 @@
 </head>
 <body>
 	<!-- Include Side Navigation -->
-	<?php include "inc/side-nav.php"; ?>
-
 	<?php 
+	$key = "hhdsfs1263z";
+	include "inc/side-nav.php"; 
 	include_once("data/User.php");
 	include_once("../db_conn.php");
-	$users = getAll($conn); // Fetch all users
+	$users = getAll($conn); 
 	?>
 
 	<div class="main-table">
@@ -78,3 +84,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php }else {
+	header("Location: ../admin-login.php");
+	exit;
+} ?>

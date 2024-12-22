@@ -77,18 +77,15 @@
         <li class="nav-item">
           <a class="nav-link" href="blog.php">Article</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="category.php">Category</a>
-        </li>
         <?php if ($logged) { ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="profile.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <!-- Display the profile photo beside the username -->
              <?php if (isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] != ""): ?>
-              <img src="../upload/blog/<?= $_SESSION['profile_photo'] ?>" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+              <img src="upload/blog/<?= $_SESSION['profile_photo'] ?>" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
             <?php else: ?>
               <!-- Default profile photo if none is set -->
-              <img src="path/to/default-image.jpg" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+              <img src="img/user-default.png" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
             <?php endif; ?>
             @<?=$_SESSION['username']?>
           </a>
