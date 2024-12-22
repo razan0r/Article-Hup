@@ -40,7 +40,7 @@
 		  <button type="submit" class="btn btn-primary">Login</button>
 		  <a href="admin-login.php" class="btn btn-secondary">Admin Login</a>
 		  &nbsp;&nbsp;&nbsp;
-		  <a href="blog.php" class="link-secondary">Blog</a>
+		  <a href="blog.php" class="link-secondary">Article</a>
 		  &nbsp;&nbsp;&nbsp;
 		  <a href="signup.php" class="link-secondary">Sign Up</a>
 		</form>

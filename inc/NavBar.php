@@ -56,6 +56,11 @@
   }
 </style>
 
+<?php 
+    $logged = isset($_SESSION['username']); 
+?>
+
+
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <a class="navbar-brand" href="blog.php">
@@ -70,7 +75,7 @@
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="blog.php">Blog</a>
+          <a class="nav-link" href="blog.php">Article</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="category.php">Category</a>
@@ -78,7 +83,13 @@
         <?php if ($logged) { ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="profile.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-user" aria-hidden="true"></i> 
+             <!-- Display the profile photo beside the username -->
+             <?php if (isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] != ""): ?>
+              <img src="../upload/blog/<?= $_SESSION['profile_photo'] ?>" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+            <?php else: ?>
+              <!-- Default profile photo if none is set -->
+              <img src="path/to/default-image.jpg" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+            <?php endif; ?>
             @<?=$_SESSION['username']?>
           </a>
           <ul class="dropdown-menu">
@@ -91,10 +102,7 @@
         </li>
         <?php } ?>
       </ul>
-      <form class="d-flex" role="search" method="GET" action="blog.php">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+    
     </div>
   </div>
 </nav>

@@ -4,7 +4,7 @@ session_start();
 if(isset($_POST['uname']) && 
    isset($_POST['pass'])){
 
-    include "../db_conn.php";
+    include_once '../db_conn.php';
 
     $uname = $_POST['uname'];
     $pass = $_POST['pass'];

@@ -14,6 +14,7 @@ function getAll($conn){
    	 return 0;
    }
 }
+
  // getAllDeep admin
 function getAllDeep($conn){
    $sql = "SELECT * FROM post";
@@ -27,6 +28,7 @@ function getAllDeep($conn){
        return 0;
    }
 }
+
 // getAllPostsByCategory
 function getAllPostsByCategory($conn, $category_id){
    $sql = "SELECT * FROM post  WHERE category=? AND publish=1";
@@ -68,24 +70,7 @@ function getByIdDeep($conn, $id){
    }
 }
 
-// serach
-function serach($conn, $key){
-   # creating simple search temple :)  
-   $key = "%{$key}%";
 
-   $sql = "SELECT * FROM post 
-           WHERE publish=1 AND (post_title LIKE ? 
-           OR post_text LIKE ?)";
-   $stmt = $conn->prepare($sql);
-   $stmt->execute([$key, $key]);
-
-   if($stmt->rowCount() >= 1){
-         $data = $stmt->fetchAll();
-         return $data;
-   }else {
-       return 0;
-   }
-}
 // getCategoryById
 function getCategoryById($conn, $id){
    $sql = "SELECT * FROM category WHERE id=?";

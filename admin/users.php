@@ -9,15 +9,14 @@
 </head>
 <body>
 	<!-- Include Side Navigation -->
-   <?php include "inc/side-nav.php"; ?> 
+	<?php include "inc/side-nav.php"; ?>
+
 	<?php 
-	$key = "hhdsfs1263z";
-	include "inc/side-nav.php"; 
 	include_once("data/User.php");
 	include_once("../db_conn.php");
-	$users = getAll($conn);
+	$users = getAll($conn); // Fetch all users
+	?>
 
-  ?>
 	<div class="main-table">
 	 	<h3 class="mb-3">All Users 
 	 		<a href="../signup.php" class="btn btn-success">Add New</a>
@@ -45,28 +44,31 @@
 		      <th scope="col">#</th>
 		      <th scope="col">Full Name</th>
 		      <th scope="col">Username</th>
-		      <th scope="col">Action</th>
+		      <th scope="col">Actions</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		  	<!-- Loop through users -->
-		 <?php foreach ($users as $user) { ?> 
+			<?php foreach ($users as $user) { ?> 
 		    <tr>
-		      <th scope="row"><!-- <?=$user['id']?> --></th>
-		      <td><?=$user['fname']?></td>
-		      <td><?=$user['username']?></td>
+		      <th scope="row"><?= $user['id'] ?></th>
+		      <td><?= $user['fname'] ?></td>
+		      <td><?= $user['username'] ?></td>
 		      <td>
-		      	<a href="user-delete.php?user_id=<= <?=$user['id']?> " class="btn btn-danger">Delete</a>
+		      	<!-- Action buttons -->
+		      	<a href="user-update.php?user_id=<?= $user['id'] ?>" class="btn btn-primary">Edit</a>
+		      	<a href="user-password.php?user_id=<?= $user['id'] ?>" class="btn btn-warning">Set Password</a>
+		      	<a href="user-delete.php?user_id=<?= $user['id'] ?>" class="btn btn-danger">Delete</a>
 		      </td>
 		    </tr>
-		   <?php } ?> 
+		    <?php } ?> 
 		  </tbody>
 		</table>
-	<?php } else { ?> 
+		<?php } else { ?> 
 		<div class="alert alert-warning">
 			Empty!
 		</div>
-		 <?php } ?> 
+		<?php } ?> 
 	</div>
 
 	<script>
