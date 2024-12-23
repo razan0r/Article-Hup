@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: admin-login.php");
+    exit;
+}
+header("Location: users.php"); // Redirect to users management by default
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

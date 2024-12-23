@@ -18,6 +18,7 @@
 			  enctype="multipart/form-data">
 
     		<h4 class="display-4  fs-1">Create  New Account</h4><br>
+
     		<?php if(isset($_GET['error'])){ ?>
     		<div class="alert alert-danger" role="alert">
 			  <?php echo htmlspecialchars($_GET['error']); ?>
@@ -29,6 +30,8 @@
 			  <?php echo htmlspecialchars($_GET['success']); ?>
 			</div>
 		    <?php } ?>
+
+			
 		  <div class="mb-3">
 		    <label class="form-label">Full Name</label>
 		    <input type="text" 

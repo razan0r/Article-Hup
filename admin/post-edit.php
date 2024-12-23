@@ -25,7 +25,6 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username']) && isset($_GET[
       include_once("../db_conn.php");
       $post_id =  $_GET['post_id'];
       $post = getById($conn, $post_id);
-      $categories = getAllCategories($conn);
 
 	?>
                
@@ -79,19 +78,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username']) && isset($_GET[
 		           class="form-control text"
 		           name="text"><?=$post['post_text']?></textarea>
 		  </div>
-		  <div class="mb-3">
-		    <label class="form-label">Category</label>
-		    <select name="category" class="form-control">
-		    	<?php foreach ($categories as $category) { 
-                  
-		    	?>
-		    	<option value="<?=$category['id']?>"
-		    		 <?php  echo ($category['id'] == $post['category']) ? "selected": "" ?>>
-		    		<?=$category['category']?></option>
-		        <?php } ?>
-		    </select>
-		    
-		  </div>
+	
 		  <button type="submit" class="btn btn-primary">Create</button>
 		</form>
 	 </div>

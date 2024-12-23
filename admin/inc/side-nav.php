@@ -34,12 +34,7 @@
 						<span>Post</span>
 					</a>
 				</li>
-				<li>
-					<a href="Category.php">
-						<i class="fa fa-window-restore" aria-hidden="true"></i>
-						<span>Category</span>
-					</a>
-				</li>
+
 				<li>
 					<a href="../logout.php">
 						<i class="fa fa-power-off" aria-hidden="true"></i>

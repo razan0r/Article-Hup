@@ -71,37 +71,6 @@ function getByIdDeep($conn, $id){
 }
 
 
-// getCategoryById
-function getCategoryById($conn, $id){
-   $sql = "SELECT * FROM category WHERE id=?";
-   $stmt = $conn->prepare($sql);
-   $stmt->execute([$id]);
-
-   if($stmt->rowCount() >= 1){
-         $data = $stmt->fetch();
-         return $data;
-   }else {
-       return 0;
-   }
-}
-
-//get 5 Categoies 
-
-function get5Categoies($conn){
-   $sql = "SELECT * FROM category LIMIT 5";
-   $stmt = $conn->prepare($sql);
-   $stmt->execute();
-
-   if($stmt->rowCount() >= 1){
-         $data = $stmt->fetchAll();
-         return $data;
-   }else {
-       return 0;
-   }
-}
-
-
-
 function getUserByID($conn, $id){
    $sql = "SELECT id, fname, username FROM users WHERE id=?";
    $stmt = $conn->prepare($sql);
@@ -115,19 +84,7 @@ function getUserByID($conn, $id){
    }
 }
 
-// getAllCategories
-function getAllCategories($conn){
-   $sql = "SELECT * FROM category ORDER BY category";
-   $stmt = $conn->prepare($sql);
-   $stmt->execute();
 
-   if($stmt->rowCount() >= 1){
-         $data = $stmt->fetchAll();
-         return $data;
-   }else {
-       return 0;
-   }
-}
 
 // Delete By ID
 function deleteById($conn, $id){

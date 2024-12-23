@@ -21,6 +21,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
 <body>
 	<?php 
         include 'inc/NavBar.php';
+		include 'home.php'
 	 ?>
      <div class="main-banner">
      	

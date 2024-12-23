@@ -11,7 +11,7 @@ if (isset($_GET['post_id'])) {
     include_once("db_conn.php");
     $id = $_GET['post_id'];
     $post = getById($conn, $id);
-    $categories = get5Categoies($conn); 
+  
 
     if ($post == 0) {
         header("Location: blog.php");
@@ -21,9 +21,10 @@ if (isset($_GET['post_id'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - <?=$post['post_title']?></title>
+    <title>Blog - <?= htmlspecialchars($post['post_title']) ?></title>
+    <!-- Bootstrap and Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -46,7 +47,7 @@ if (isset($_GET['post_id'])) {
                             <p class="card-text"><?=$post['post_text']?></p>
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <small class="text-body-secondary">Posted on: 2024-12-22</small>
+                             <small class="text-body-secondary">Posted on: <?= htmlspecialchars($post['created_at']) ?></small>
                             </div>
                         </div>
                     </div>
@@ -54,24 +55,10 @@ if (isset($_GET['post_id'])) {
 
                 </main>
             </div>
-
-            <!-- Sidebar: Categories -->
-            <div class="col-md-4">
-                <aside class="aside-main">
-                    <div class="list-group category-aside">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                            Category
-                        </a>
-                        <?php foreach ($categories as $category ) { ?>
-                            <a href="category.php?category_id=<?=$category['id']?>" class="list-group-item list-group-item-action">
-                                <?= $category['category']; ?>
-                            </a>
-                        <?php } ?>
-                    </div>
-                </aside>
-            </div>
         </div>
     </div>
+    <!-- Bootstrap Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
 </body>
 </html>

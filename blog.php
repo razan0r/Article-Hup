@@ -36,7 +36,8 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
     
     <!-- Main content container -->
     <div class="container mt-5">
-        <section class="d-flex">
+        <section class="row justify-content-center">
+            
             <!-- Main blog content -->
             <?php if ($posts != 0) { ?>
             <main class="main-blog">
@@ -75,21 +76,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
             </main>
             <?php } ?>
 
-            <!-- Sidebar section with categories -->
-            <aside class="aside-main">
-                <div class="list-group category-aside">
-                    <!-- Sidebar header -->
-                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                        Category
-                    </a>
-                    <!-- Loop through each category and display it -->
-                    <?php foreach ($categories as $category) { ?>
-                    <a href="category.php?category_id=<?=$category['id']?>" class="list-group-item list-group-item-action">
-                        <?= $category['category']; ?>
-                    </a>
-                    <?php } ?>
-                </div>
-            </aside>
+
         </section>
     </div>
 

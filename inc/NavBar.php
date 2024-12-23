@@ -14,13 +14,19 @@
   .nav-link {
     color: #ffffff;
     margin-right: 1rem;
-    transition: color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 5px 10px; /* Add padding for better visual alignment */
+    border-radius: 5px; /* Rounded corners for hover and active states */
   }
-  .nav-link:hover,
-.nav-link.active {
-  color: #00bfff;
-  font-weight: bold; 
-}
+  .nav-link:hover {
+    color: #00bfff;
+    background-color: rgba(0, 191, 255, 0.2); /* Slight highlight on hover */
+  }
+  .nav-link.active {
+    background-color: #00bfff; /* Bright background for active state */
+    color: #ffffff; /* Retain white text color */
+    font-weight: bold; /* Bold font for emphasis */
+  }
   .nav-item.dropdown .dropdown-menu {
     background-color: #34495e;
     border: none;
@@ -55,11 +61,10 @@
     color: #ffffff;
   }
 </style>
-
 <?php 
-    $logged = isset($_SESSION['username']); 
+$logged = isset($_SESSION['username']); 
+$current_page = basename($_SERVER['PHP_SELF']); // Get the current page name
 ?>
-
 
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
@@ -71,35 +76,42 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Navigation Links -->
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          <a class="nav-link <?= $current_page == 'index.php' ? 'active' : '' ?>" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="blog.php">Article</a>
+          <a class="nav-link <?= $current_page == 'blog.php' ? 'active' : '' ?>" href="blog.php">Article</a>
         </li>
-        <?php if ($logged) { ?>
+
+        <!-- Profile Dropdown for Logged-In Users -->
+        <?php if ($logged): ?>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="profile.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <!-- Display the profile photo beside the username -->
-             <?php if (isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] != ""): ?>
-              <img src="upload/blog/<?= $_SESSION['profile_photo'] ?>" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php if (!empty($_SESSION['profile_photo'])): ?>
+              <img src="upload/blog/<?= htmlspecialchars($_SESSION['profile_photo']) ?>" 
+                   alt="Profile Photo" 
+                   class="rounded-circle" 
+                   style="width: 30px; height: 30px; margin-right: 10px;">
             <?php else: ?>
-              <!-- Default profile photo if none is set -->
-              <img src="img/user-default.png" alt="Profile Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 10px;">
+              <img src="img/user-default.png" 
+                   alt="Default Profile Photo" 
+                   class="rounded-circle" 
+                   style="width: 30px; height: 30px; margin-right: 10px;">
             <?php endif; ?>
-            @<?=$_SESSION['username']?>
+            @<?= htmlspecialchars($_SESSION['username']) ?>
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
           </ul>
         </li>
-        <?php } else { ?>
+        <?php else: ?>
+        <!-- Login/Signup Link for Guests -->
         <li class="nav-item">
-          <a class="nav-link" href="login.php">Login | Signup</a>
+          <a class="nav-link <?= $current_page == 'login.php' ? 'active' : '' ?>" href="login.php">Login | Signup</a>
         </li>
-        <?php } ?>
+        <?php endif; ?>
       </ul>
-    
     </div>
   </div>
 </nav>
