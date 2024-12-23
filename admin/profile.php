@@ -1,113 +1,251 @@
-<?php 
-session_start();
 
-if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
- ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Dashboard - Users</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-	<link rel="stylesheet" href="../css/sid-bar.css">
-	<link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-	<?php 
-      $key = "hhdsfs1263z";
-	  include "inc/side-nav.php"; 
-      include_once("data/Admin.php");
-      include_once("../db_conn.php");
-      $admin = getByID($conn, $_SESSION['admin_id']);
 
-	?>
-               
-	 <div class="main-table">
-	 	<h3 class="mb-3">Admin Profile </h3>
-	 	<?php if (isset($_GET['error'])) { ?>	
-	 	<div class="alert alert-warning">
-			<?=htmlspecialchars($_GET['error'])?>
-		</div>
-	    <?php } ?>
+import React, { useState, useEffect } from 'react';
+import './ServiceForm.css';
+import { validateFormData } from './validateFormData';
+import Select from 'react-select';
 
-        <?php if (isset($_GET['success'])) { ?>	
-	 	<div class="alert alert-success">
-			<?=htmlspecialchars($_GET['success'])?>
-		</div>
-	    <?php } ?>
-        <form class="shadow p-3" 
-    	      action="req/admin-edit.php" 
-    	      method="post">
-          <h3>Change Profile Info</h3>
-		  <div class="mb-3">
-		    <label class="form-label">First name</label>
-		    <input type="text" 
-		           class="form-control"
-		           name="fname"
-		           value="<?=$admin['first_name']?>">
-		  </div>
-		  <div class="mb-3">
-		    <label class="form-label">Last name</label>
-		    <input type="text" 
-		           class="form-control"
-		           name="lname"
-		           value="<?=$admin['last_name']?>">
-		  </div>
-		  <div class="mb-3">
-		    <label class="form-label">Username</label>
-		    <input type="text" 
-		           class="form-control"
-		           name="username"
-		           value="<?=$admin['username']?>">
-		  </div>
-		  <button type="submit" class="btn btn-primary">Change</button>
-		</form>
+function ServiceForm() {
+  const [options, setOptions] = useState([]);
+  const [qualificationsOptions, setQualificationsOptions] = useState([]);
 
-		<form class="shadow p-3 mt-5" 
-    	      action="req/admin-edit-pass.php" 
-    	      method="post">
-          <h3 id="cpassword">Change password</h3>
-          <?php if (isset($_GET['perror'])) { ?>	
-	 	<div class="alert alert-warning">
-			<?=htmlspecialchars($_GET['perror'])?>
-		</div>
-	    <?php } ?>
+  const [formData, setFormData] = useState({
+    cost: '',
+    location: '',
+    availability: '',
+    about: '',
+    skills: [], // Array for multiple skill selections
+    qualifications: '',
+    description: ''
+  });
 
-        <?php if (isset($_GET['psuccess'])) { ?>	
-	 	<div class="alert alert-success">
-			<?=htmlspecialchars($_GET['psuccess'])?>
-		</div>
-	    <?php } ?>
-		  <div class="mb-3">
-		    <label class="form-label">Current Password</label>
-		    <input type="password" 
-		           class="form-control"
-		           name="cpass">
-		  </div>
-		  <div class="mb-3">
-		    <label class="form-label">New password</label>
-		    <input type="password" 
-		           class="form-control"
-		           name="new_pass">
-		  </div>
-		  <div class="mb-3">
-		    <label class="form-label">Confirm password</label>
-		    <input type="password" 
-		           class="form-control"
-		           name="cnew_pass">
-		  </div>
-		  <button type="submit" class="btn btn-primary">Change password</button>
-		</form>
-	 	
-	 </div>
-	</section>
-	</div>
+  const [errors, setErrors] = useState({}); // State to hold validation errors
 
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-</body>
-</html>
+  // Fetch skills options from the API
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/skills');
+        const data = await response.json();
+        const formattedOptions = data.map(skill => ({ value: skill.id, label: skill.name }));
+        setOptions(formattedOptions);
+      } catch (error) {
+        console.error('Error fetching skills:', error);
+      }
+    };
 
-<?php }else {
-	header("Location: ../admin-login.php");
-	exit;
-} ?>
+    fetchSkills();
+  }, []);
+
+  // Fetch qualifications options from the API
+  useEffect(() => {
+    const fetchQualifications = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/qualifications');
+        const data = await response.json();
+        const formattedQualifications = data.map(qualification => ({
+          value: qualification.id,
+          label: qualification.name
+        }));
+        setQualificationsOptions(formattedQualifications);
+      } catch (error) {
+        console.error('Error fetching qualifications:', error);
+      }
+    };
+
+    fetchQualifications();
+  }, []);
+
+  // Handle change for regular inputs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Clear description when qualification changes
+    if (name === 'qualifications') {
+      setFormData((prevData) => ({
+        ...prevData,
+        qualifications: value,
+        description: '' // Reset description
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  // Handle change for the Select component
+  const handleSkillsChange = (selected) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      skills: selected || [], // Handle case where no option is selected
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateFormData(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        const response = await fetch('http://localhost:7244/api/Service', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        console.log('Success:', result);
+        // Optionally, reset the form or show a success message
+        setFormData({
+          Name: '',
+          cost: '',
+          location: '',
+          availability: '',
+          about: '',
+          skills: [],
+          qualifications: '',
+          description: '',
+        });
+      } catch (error) {
+        console.error('Error:', error);
+        // Optionally, show an error message to the user
+      }
+    } else {
+      console.log('Validation errors:', validationErrors);
+    }
+  };
+
+  return (
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">Service Provider Information</h2>
+      <form onSubmit={handleSubmit} className="service-form">
+        <div className="form-group">
+          <label>Name</label>
+          <input
+            type="text"
+            name="Name"
+            value={formData.Name}
+            onChange={handleChange}
+            className={`form-control ${errors.Name ? 'is-invalid' : ''}`}
+            placeholder="Enter Name"
+            required
+          />
+          {errors.Name && <div className="invalid-feedback">{errors.Name}</div>}
+        </div>
+        <div className="form-group">
+          <label>Cost</label>
+          <input
+            type="text"
+            name="cost"
+            value={formData.cost}
+            onChange={handleChange}
+            className={`form-control ${errors.cost ? 'is-invalid' : ''}`}
+            placeholder="Enter cost"
+            required
+          />
+          {errors.cost && <div className="invalid-feedback">{errors.cost}</div>}
+        </div>
+        <div className="form-group">
+          <label>Location</label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            className={`form-control ${errors.location ? 'is-invalid' : ''}`}
+            placeholder="Enter location"
+            required
+          />
+          {errors.location && <div className="invalid-feedback">{errors.location}</div>}
+        </div>
+        <div className="form-group">
+          <label>Availability</label>
+          <input
+            type="text"
+            name="availability"
+            value={formData.availability}
+            onChange={handleChange}
+            className={`form-control ${errors.availability ? 'is-invalid' : ''}`}
+            placeholder="Enter availability"
+            required
+          />
+          {errors.availability && <div className="invalid-feedback">{errors.availability}</div>}
+        </div>
+        <div className="form-group">
+          <label>About My Service</label>
+          <textarea
+            name="about"
+            value={formData.about}
+            onChange={handleChange}
+            className={`form-control ${errors.about ? 'is-invalid' : ''}`}
+            rows="3"
+            placeholder="Describe your service"
+            required
+          ></textarea>
+          {errors.about && <div className="invalid-feedback">{errors.about}</div>}
+        </div>
+        <div className="form-group">
+          <label>Skills</label>
+          <Select
+            options={options}
+            isMulti
+            value={formData.skills}
+            onChange={handleSkillsChange} // Use the specific skills handler
+            closeMenuOnSelect={false}
+            placeholder="Select Skills"
+          />
+          {errors.skills && <div className="invalid-feedback">{errors.skills}</div>}
+        </div>
+        <div className="form-group">
+          <label>Qualifications</label>
+          <select
+            name="qualifications"
+            value={formData.qualifications}
+            onChange={handleChange}
+            className={`form-control ${errors.qualifications ? 'is-invalid' : ''}`}
+            required
+          >
+            <option value="">Select your qualification</option>
+            {qualificationsOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          {errors.qualifications && <div className="invalid-feedback">{errors.qualifications}</div>}
+
+          {/* Conditionally render the input field for description */}
+          {formData.qualifications && (
+            <div className="form-group mt-3">
+              <label>Qualification Description</label>
+              <input
+                type="text"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className="form-control"
+                placeholder={`Describe your ${formData.qualifications}`}
+                required
+              />
+            </div>
+          )}
+        </div>
+        <button type="submit" className="btn btn-primary btn-block mt-4">
+          Submit
+        </button>
+      </form>
+    </div>
+  ); 
+}
+
+export default ServiceForm;

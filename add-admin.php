@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,20 +103,5 @@
             <p>Ensure all fields are filled out correctly.</p>
         </div>
     </div>
-
-    <script>
-        // Check URL parameters for success or error messages
-        const urlParams = new URLSearchParams(window.location.search);
-        const success = urlParams.get('success');
-        const error = urlParams.get('error');
-
-        if (success) {
-            alert(success); // Show success message
-        }
-
-        if (error) {
-            alert(error); // Show error message
-        }
-    </script>
 </body>
 </html>
