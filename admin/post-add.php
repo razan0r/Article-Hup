@@ -42,46 +42,35 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
 		</div>
 	    <?php } ?>
 
-         <form class="shadow p-3" 
-    	      action="req/post-create.php" 
-    	      method="post"
-    	      enctype="multipart/form-data">
+		<form class="shadow p-3 row g-3" 
+    action="req/post-create.php" 
+    method="post"
+    enctype="multipart/form-data">
 
-		  <div class="mb-3">
-		    <label class="form-label">Title</label>
-		    <input type="text" 
-		           class="form-control"
-		           name="title">
+    <div class="col-md-6">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" name="title">
+    </div>
 
-		  </div>
+    <div class="col-md-6">
+        <label class="form-label">Cover Image</label>
+        <input type="file" class="form-control" name="cover">
+    </div>
 
-		  <div class="mb-3">
-		    <label class="form-label">Cover Image</label>
-		    <input type="file" 
-		           class="form-control"
-		           name="cover">
-		  </div>
-		  <div class="mb-3">
-		    <label class="form-label">Text</label>
-		    <textarea
-		           class="form-control text"
-		           name="text"></textarea>
-		  </div>
+    <div class="col-md-12">
+        <label class="form-label">Text</label>
+        <textarea class="form-control text" name="text"></textarea>
+    </div>
 
-		  <button type="submit" class="btn btn-primary">Create</button>
-		</form>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>
+
 	 </div>
 	</section>
 	</div>
 
-	 <script>
-	 	var navList = document.getElementById('navList').children;
-	 	navList.item(1).classList.add("active");
-
-        $(document).ready(function() {
-            $('.text').richText();
-        });
-	 </script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
