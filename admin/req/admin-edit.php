@@ -1,56 +1,88 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['admin_id']) && isset($_SESSION['username']) ) {
+if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
 
-    if(isset($_POST['fname']) && 
-       isset($_POST['lname']) &&
-       isset($_POST['username'])){
+    if (isset($_POST['title']) && isset($_FILES['cover']) && isset($_POST['text']) && isset($_POST['post_id'])) {
+        include "../../db_conn.php";
 
-      include "../../db_conn.php";
-      $fname = $_POST['fname'];
-      $lname = $_POST['lname'];
-      $username = $_POST['username'];
-      $id = $_SESSION['admin_id'];
+        $title = $_POST['title'];
+        $text = $_POST['text'];
+        $post_id = $_POST['post_id'];
 
-      if(empty($fname)){
-         $em = "First name is required"; 
-         header("Location: ../profile.php?error=$em");
-         exit;
-      }else if(empty($lname)){
-         $em = "Last name is required"; 
-         header("Location: ../profile.php?error=$em");
-         exit;
-      }else if(empty($username)){
-         $em = "Username is required"; 
-         header("Location: ../profile.php?error=$em");
-         exit;
-      }
-    
-      $sql = "UPDATE admin SET first_name=?, last_name=?, username=? WHERE id=?";
-      $stmt = $conn->prepare($sql);
-      $res = $stmt->execute([$fname,$lname,$username, $id]);
-    
-      
-     if ($res) {
-        $_SESSION['username'] = $username;
-          $sm = "Successfully edited!"; 
-          header("Location: ../profile.php?success=$sm");
-          exit;
-      }else {
-        $em = "Unknown error occurred"; 
-        header("Location: ../profile.php?error=$em");
-        exit;
-      }
+        if (empty($title)) {
+            $em = "Title is required"; 
+            header("Location: ../post-edit.php?error=$em&post_id=$post_id");
+            exit;
+        }
 
+        $image_name = $_FILES['cover']['name'];
+        $upload_new_image = false;
 
-    }else {
-        header("Location: ../profile.php");
+        // Check if a new image was uploaded
+        if ($image_name != "") {
+            $image_size = $_FILES['cover']['size'];
+            $image_temp = $_FILES['cover']['tmp_name'];
+            $error = $_FILES['cover']['error'];
+
+            if ($error === 0) {
+                if ($image_size > 130000) {
+                    $em = "Sorry, your file is too large.";
+                    header("Location: ../post-edit.php?error=$em&post_id=$post_id");
+                    exit;
+                } else {
+                    $image_ex = pathinfo($image_name, PATHINFO_EXTENSION);
+                    $image_ex = strtolower($image_ex);
+
+                    $allowed_exs = ['jpg', 'jpeg', 'png'];
+
+                    if (in_array($image_ex, $allowed_exs)) {
+                        $new_image_name = uniqid("COVER-", true) . '.' . $image_ex;
+                        $image_path = '../../upload/blog/' . $new_image_name;
+                        move_uploaded_file($image_temp, $image_path);
+                        $upload_new_image = true;
+                    } else {
+                        $em = "You can't upload files of this type.";
+                        header("Location: ../post-edit.php?error=$em&post_id=$post_id");
+                        exit;
+                    }
+                }
+            }
+        }
+
+        // Update the database
+        try {
+            if ($upload_new_image) {
+                $sql = "UPDATE post SET post_title = ?, post_text = ?, cover_url = ? WHERE post_id = ?";
+                $stmt = $conn->prepare($sql);
+                $res = $stmt->execute([$title, $text, $new_image_name, $post_id]);
+            } else {
+                $sql = "UPDATE post SET post_title = ?, post_text = ? WHERE post_id = ?";
+                $stmt = $conn->prepare($sql);
+                $res = $stmt->execute([$title, $text, $post_id]);
+            }
+
+            if ($res) {
+                $sm = "Successfully updated!";
+                header("Location: ../post-edit.php?success=$sm&post_id=$post_id");
+                exit;
+            } else {
+                $em = "Unknown error occurred.";
+                header("Location: ../post-edit.php?error=$em&post_id=$post_id");
+                exit;
+            }
+        } catch (Exception $e) {
+            $em = "Database error: " . $e->getMessage();
+            header("Location: ../post-edit.php?error=$em&post_id=$post_id");
+            exit;
+        }
+
+    } else {
+        $em = "Invalid request.";
+        header("Location: ../post-edit.php?error=$em&post_id=$post_id");
         exit;
     }
-
-
-}else {
+} else {
     header("Location: ../admin-login.php");
     exit;
-} 
+}
