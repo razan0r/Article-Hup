@@ -1,5 +1,6 @@
 <?php
 include_once("../db_conn.php");
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['user_id'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);

@@ -30,6 +30,18 @@ if(isset($_POST['fname']) &&
         header("Location: ../signup.php?error=$em&$data");
         exit;
     } else {
+        // Check if username already exists
+        $sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$uname]);
+        $count = $stmt->fetchColumn();
+
+        if ($count > 0) {
+            $em = "Username already exists. Please choose a different one.";
+            header("Location: ../signup.php?error=$em&$data");
+            exit;
+        }
+
         // Process the file upload
         $uploadDir = "../upload/blog/";
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];

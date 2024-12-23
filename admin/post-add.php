@@ -1,4 +1,3 @@
-
 <?php 
 session_start();
 
@@ -43,7 +42,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
 	    <?php } ?>
 
 		<form class="shadow p-3" 
-    	      action="req/post-edit.php" 
+    	      action="req/post-create.php" 
     	      method="post"
     	      enctype="multipart/form-data">
 
@@ -51,33 +50,23 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
 		    <label class="form-label">Title</label>
 		    <input type="text" 
 		           class="form-control"
-		           name="title"
-		           value="<?=$post['post_title']?>">
-		    <input type="text" 
-		           class="form-control"
-		           name="post_id"
-		           value="<?=$post['post_id']?>" 
-		           hidden>
-		    <input type="text" 
-		           class="form-control"
-		           name="cover_url"
-		           value="<?=$post['cover_url']?>" 
-		           hidden>
+		           name="title">
+
 		  </div>
+
 		  <div class="mb-3">
 		    <label class="form-label">Cover Image</label>
 		    <input type="file" 
 		           class="form-control"
 		           name="cover">
-		     <img src="../upload/blog/<?=$post['cover_url']?>" width="200">
 		  </div>
 		  <div class="mb-3">
 		    <label class="form-label">Text</label>
 		    <textarea
 		           class="form-control text"
-		           name="text"><?=$post['post_text']?></textarea>
+		           name="text"></textarea>
 		  </div>
-	
+
 		  <button type="submit" class="btn btn-primary">Create</button>
 		</form>
 

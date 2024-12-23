@@ -100,6 +100,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Get the current page name
                    style="width: 30px; height: 30px; margin-right: 10px;">
             <?php endif; ?>
             @<?= htmlspecialchars($_SESSION['username']) ?>
+            
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="logout.php">Logout</a></li>

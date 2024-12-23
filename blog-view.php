@@ -48,7 +48,7 @@ if (isset($_GET['post_id'])) {
                             <p class="card-text"><?=$post['post_text']?></p>
                             <hr>
                             <div class="d-flex justify-content-between">
-                             <small class="text-body-secondary">Posted on: <?= htmlspecialchars($post['created_at']) ?></small>
+                             <small class="text-body-secondary">Posted on: <?= htmlspecialchars($post['crated_at']) ?></small>
                             </div>
                         </div>
                     </div>
