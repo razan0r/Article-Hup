@@ -87,14 +87,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username']) && isset($_GET[
 	</section>
 	</div>
 
-	 <script>
-	 	var navList = document.getElementById('navList').children;
-	 	navList.item(1).classList.add("active");
 
-        $(document).ready(function() {
-            $('.text').richText();
-        });
-	 </script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>

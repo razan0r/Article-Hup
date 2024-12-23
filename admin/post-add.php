@@ -42,30 +42,44 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
 		</div>
 	    <?php } ?>
 
-		<form class="shadow p-3 row g-3" 
-    action="req/post-create.php" 
-    method="post"
-    enctype="multipart/form-data">
+		<form class="shadow p-3" 
+    	      action="req/post-edit.php" 
+    	      method="post"
+    	      enctype="multipart/form-data">
 
-    <div class="col-md-6">
-        <label class="form-label">Title</label>
-        <input type="text" class="form-control" name="title">
-    </div>
-
-    <div class="col-md-6">
-        <label class="form-label">Cover Image</label>
-        <input type="file" class="form-control" name="cover">
-    </div>
-
-    <div class="col-md-12">
-        <label class="form-label">Text</label>
-        <textarea class="form-control text" name="text"></textarea>
-    </div>
-
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary">Create</button>
-    </div>
-</form>
+		  <div class="mb-3">
+		    <label class="form-label">Title</label>
+		    <input type="text" 
+		           class="form-control"
+		           name="title"
+		           value="<?=$post['post_title']?>">
+		    <input type="text" 
+		           class="form-control"
+		           name="post_id"
+		           value="<?=$post['post_id']?>" 
+		           hidden>
+		    <input type="text" 
+		           class="form-control"
+		           name="cover_url"
+		           value="<?=$post['cover_url']?>" 
+		           hidden>
+		  </div>
+		  <div class="mb-3">
+		    <label class="form-label">Cover Image</label>
+		    <input type="file" 
+		           class="form-control"
+		           name="cover">
+		     <img src="../upload/blog/<?=$post['cover_url']?>" width="200">
+		  </div>
+		  <div class="mb-3">
+		    <label class="form-label">Text</label>
+		    <textarea
+		           class="form-control text"
+		           name="text"><?=$post['post_text']?></textarea>
+		  </div>
+	
+		  <button type="submit" class="btn btn-primary">Create</button>
+		</form>
 
 	 </div>
 	</section>
