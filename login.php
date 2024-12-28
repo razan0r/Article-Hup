@@ -22,11 +22,7 @@
 			</div>
 		    <?php } ?>
 
-    		<!-- Error Message Placeholder -->
-    		<div class="alert alert-danger d-none" role="alert">
-			  Error message here
-			</div>
-
+    	
 		  <div class="mb-3">
 		    <label class="form-label">User name</label>
 		    <input type="text" class="form-control" name="uname" value="<?php echo (isset($_GET['uname']))? htmlspecialchars($_GET['uname']):"" ?>">

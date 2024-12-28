@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,19 +84,13 @@
     <div class="form-container">
         <h1>Add Admin</h1>
         <form action="admin/add-admin-process.php" method="POST">
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Enter first name" required>
-
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Enter last name" required>
-
             <label for="username">Username:</label>
             <input type="text" id="username" name="uname" placeholder="Choose a username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="pass" placeholder="Enter a secure password" required>
 
-            <button type="submit">Add Admin</button>
+            <button type="submit" class="btn btn-primary">Add Admin</button>
         </form>
         <div class="form-footer">
             <p>Ensure all fields are filled out correctly.</p>
