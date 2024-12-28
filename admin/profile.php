@@ -40,20 +40,6 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username'])) {
     	      method="post">
           <h3>Change Profile Info</h3>
 		  <div class="mb-3">
-		    <label class="form-label">First name</label>
-		    <input type="text" 
-		           class="form-control"
-		           name="fname"
-		           value="<?=$admin['first_name']?>">
-		  </div>
-		  <div class="mb-3">
-		    <label class="form-label">Last name</label>
-		    <input type="text" 
-		           class="form-control"
-		           name="lname"
-		           value="<?=$admin['last_name']?>">
-		  </div>
-		  <div class="mb-3">
 		    <label class="form-label">Username</label>
 		    <input type="text" 
 		           class="form-control"

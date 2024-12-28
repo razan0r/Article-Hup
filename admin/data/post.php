@@ -29,19 +29,7 @@ function getAllDeep($conn){
    }
 }
 
-// getAllPostsByCategory
-function getAllPostsByCategory($conn, $category_id){
-   $sql = "SELECT * FROM post  WHERE category=? AND publish=1";
-   $stmt = $conn->prepare($sql);
-   $stmt->execute([$category_id]);
 
-   if($stmt->rowCount() >= 1){
-         $data = $stmt->fetchAll();
-         return $data;
-   }else {
-       return 0;
-   }
-}
 // getById
 function getById($conn, $id){
    $sql = "SELECT * FROM post 

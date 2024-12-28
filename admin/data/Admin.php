@@ -2,7 +2,7 @@
 
 // Get All USERS
 function getByID($conn, $id){
-   $sql = "SELECT id, first_name, last_name, username FROM admin WHERE id=?";
+   $sql = "SELECT id, username FROM admin WHERE id=?";
    $stmt = $conn->prepare($sql);
    $stmt->execute([$id]);
 
