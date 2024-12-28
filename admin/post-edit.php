@@ -1,5 +1,3 @@
-
-
 <?php 
 session_start();
 
@@ -13,11 +11,8 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['username']) && isset($_GET[
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/sid-bar.css">
 	<link rel="stylesheet" href="../css/style.css">
-
-
-    <link rel="stylesheet" href="../css/richtext.min.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
+   
 </head>
 <body>
 	<?php 
