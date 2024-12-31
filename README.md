@@ -18,6 +18,6 @@ Article-Hup is a platform that allows users to create, view, and share articles 
   - Delete users.
   - Update user information.
   - Set or update users' passwords.
-  - Can submit new articles with a title, content.
+  - Can submit new articles with a title, content and photo.
 ### Database Management
 - The application uses a database to manage user accounts, supporting CRUD (Create, Read, Update, Delete) operations on the user accounts.
